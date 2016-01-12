@@ -1,0 +1,123 @@
+
+<html>
+<head>
+  <script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<style>
+  video {
+    width: 80%;
+    height: 80%;
+    padding: 25px;
+    border: 25px solid black;
+    margin: 25px;
+
+}
+
+
+
+
+
+
+  </style>
+  <script>
+  //Initializer Function
+
+
+  $(function()
+  {
+    //Initial Setup
+   var pop1 = Popcorn("#video1");
+   var pop2 = Popcorn("#video2");
+
+
+ pop1.code({
+       start: 1,
+        end: 25,
+        onStart:function (options)
+ {
+ pop1.image({
+          // seconds
+        start: 1,
+        // seconds
+        end: 3,
+        src: "img/key_press.png",
+        target: "video1"
+
+
+      });
+
+
+ },
+        onEnd: function (options)
+ {
+
+
+
+
+
+ }
+     })
+
+
+
+    pop1.play();
+    pop2.preload("auto");
+
+    $("#video2").hide();
+    allowPress = true;
+
+    //Event Listeners
+    $(document).keydown(
+      function(event)
+      {
+
+
+
+        if(allowPress)
+        {
+          var time = pop1.currentTime();
+          pop1.pause();
+          $("#video1").hide();
+          $("#video2").show();
+          pop2.play(time);
+          allowPress = false;
+        }
+      }
+    );
+
+    $(document).keyup(
+      function(event)
+      {
+        var time = pop2.currentTime();
+        pop2.pause();
+        $("#video2").hide();
+        $("#video1").show();
+        pop1.play(time);
+        allowPress = true;
+      }
+    );
+
+
+
+// at 5 seconds, switch the time back to 1 second
+
+  });
+
+  </script>
+
+</head>
+<body>
+
+
+<video id='video1' preload='metadata'  width="80%" height="80%" controls>
+  <source src="videos/walking_38sec.mp4" type="video/mp4">
+
+</video>
+
+<video id='video2' preload='metadata' width="80%" height="80%" controls>
+  <source src="videos/picture_38sec.mp4" type="video/mp4">
+
+</video>
+
+</body>
+</html>
